@@ -14,7 +14,7 @@ The only requirement for the assignment is that it give us at least 5 food truck
 
 :link: SFGov [Dataset]([https://data.sfgov.org/resource/rqzj-sfat.json](https://data.sfgov.org/Economy-and-Community/Mobile-Food-Facility-Permit/rqzj-sfat/data))
 
-# MiVP
+# MVP
 The following assumption were made to scope the MVP (Minimum viable product) for the solution.
 ## Key requirements
  1. Solution has to be programming language agnostic, so I will be using python to program the logic
