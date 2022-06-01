@@ -17,7 +17,8 @@ The only requirement for the assignment is that it give us at least 5 food truck
 # MiVP
 The following assumption were made to scope the MVP (Minimum viable product) for the solution.
 ## Key requirements
- 1. Solution has to be programming language agnostic
+ 1. Solution has to be programming language agnostic, so I will be using python to program the logic
+ 2. All the details related to python install, required packages and environment set-up are documented for reference
 
 ### In-scope
 1. Users will be able to query for food trucks proximate to a specific location (latitude and longitude).
