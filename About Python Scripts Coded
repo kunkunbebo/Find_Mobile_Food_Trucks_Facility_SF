@@ -59,4 +59,150 @@ Index: []
 
 
 
-Script 2: 
+Script 2: Find_Food_Truck_Facility_SF.py
+Logic : Here I have used slightly different logic from the previous script. Instead of just writing logic to read csv and filter data based on the user input.
+I thought more from user perspective, so if a user want to goto Food Truck then they will also use 'nearby'/within x kilometers/miles as another criteria. Because no one travels across the island for food. I know the csv file is for SF area only but evemn that can be too big for someone willing to go only 20 kilometers from their location.
+So, I have created a function to calculate the distance between user provided latitude and longitude and csv lat and long, and then provide list of Food Trucks within x radius of that difference.
+
+It is a little different logic and assumes radius and distance between latitudes and longitudes but I believe that it will be more user friendly to do it this way.
+
+Again, inspite of using pandas, math packages, I am facing data type issue
+
+Here is the code and sample run on it,
+
+# Import math and numpy functions
+import math
+import numpy as np
+#Import Pandas to create dataframe
+import pandas as pd
+#Initialise Pandas Dataframe using Mobile_Food_Facility_Permit.csv
+# Read csv with dtype as str so that data type of latitude and longitude is not changed during dataframe creation
+csv_seperator = ','
+df = pd.read_csv('Mobile_Food_Facility_Permit.csv', dtype='str', sep=csv_seperator)
+# Assign Latitude column to sort_lan - a new column in df with type conversion to float64 and assign latitude column to sort_lon a new column in df
+df['sort_lat']=df['Latitude'].astype('float64')
+df['sort_lon']=df['Longitude'].astype('float64')
+print("Original csv and two more columns")
+print(df)
+# Create new csv with less columns for easy troubleshooting of code, rest of the columns will be included in df1 once program works without errors
+df1=pd.DataFrame(columns=['locationid','lat','lon'])
+print(df1) # it will be empty dataframe as of now
+df1['locationid']=df['locationid']
+df1['lat']=df['sort_lat']
+df1.round(2)
+print(df1['lat'])
+df1['lon']=df['sort_lon']
+print(df['sort_lon'])
+print("Subset of csv with only few columns")
+print(df1)
+#User input for latitude and longitude
+newlat=input("Enter value for Latitude: ")
+newlon=input("Enter value for Longitude: ")
+print(newlat)
+print(newlon)
+# Fixed values for lat and lon that were used to test program   39.54,-114.20
+#newlat=39.54
+#newlon=-114.20
+
+#Import trig functions from math package
+from math import sin, cos, sqrt, atan2,radians
+
+#Calculate distance between user input latitude and longitude and latitude's, longitude's in the csv to display nearest Food Trucks based on user co-ordinates
+def getDist(lat1,lon1,lat2,lon2):
+  R = 6373.0
+
+  lat1 = radians(lat1)
+  lon1 = radians(lon1)
+  lat2 = radians(lat2)
+  lon2 = radians(lon2)
+
+  dlon = lon2 - lon1
+  dlat = lat2 - lat1
+
+  a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
+  c = 2 * atan2(sqrt(a), sqrt(1 - a))
+  return R * c
+
+  #Apply distance function to dataframe
+df1['dist']=list(map(lambda k: getDist(df1.loc[k]['lat'],df1.loc[k]['lon'],newlat,newlon), df1.index))
+
+ #This will give all locations within radius of 600 km
+df1[df1['dist']<600]
+print(df1)
+
+(dev_env) Nagina-Malviya:miniconda3 yogitamalviya$ python yy1.py
+Original csv and two more columns
+    locationid                     Applicant FacilityType       cnn                                LocationDescription  ... Supervisor Districts Zip Codes Neighborhoods (old)   sort_lat    sort_lon
+0      1571753               The Geez Freeze        Truck    887000     18TH ST: DOLORES ST to CHURCH ST (3700 - 3799)  ...                    5     28862                   3  37.762019 -122.427306
+1      1569152  Datam SF LLC dba Anzu To You        Truck  12463000  TAYLOR ST: BAY ST to NORTH POINT ST (2500 - 2599)  ...                   10       308                  23  37.805885 -122.415945
+2      1569145                 Casita Vegana        Truck   7553000  JOHN MUIR DR: LAKE MERCED BLVD to SKYLINE BLVD...  ...                    4        64                  14  37.721890 -122.492521
+3      1590834                    El Alambre        Truck    580000      14TH ST: FOLSOM ST to SHOTWELL ST (100 - 150)  ...                    7     28853                  19  37.767852 -122.416105
+4      1591823                     Cochinita        Truck  12662000        TOWNSEND ST: LUSK ST to 04TH ST (252 - 299)  ...                    9     28856                  34  37.777755 -122.394808
+..         ...                           ...          ...       ...                                                ...  ...                  ...       ...                 ...        ...         ...
+483    1332946     Mini Mobile Food Catering        Truck    699001  16TH ST: OWENS ST to 07TH ST \ MISSISSIPPI ST ...  ...                  NaN       NaN                 NaN   0.000000    0.000000
+484     934553            Casey's Pizza, LLC        Truck  10624001         POST ST: MONTGOMERY ST to LICK PL (1 - 40)  ...                   10     28854                   6  37.788779 -122.402575
+485    1332939     Mini Mobile Food Catering        Truck    414000       08TH ST: HERON ST to HARRISON ST (350 - 399)  ...                    9     28853                  34  37.773694 -122.409658
+486    1337434                Liang Bai Ping        Truck  12570000   THOMAS AVE: HAWES ST to INGALLS ST (1200 - 1299)  ...                    8        58                   1  37.726710 -122.385295
+487    1337447                Liang Bai Ping        Truck   2866000     BEALE ST: FOLSOM ST to HARRISON ST (300 - 399)  ...                    9     28855                   6  37.788139 -122.392580
+
+[488 rows x 31 columns]
+Empty DataFrame
+Columns: [locationid, lat, lon]
+Index: []
+0      37.762019
+1      37.805885
+2      37.721890
+3      37.767852
+4      37.777755
+         ...    
+483     0.000000
+484    37.788779
+485    37.773694
+486    37.726710
+487    37.788139
+Name: lat, Length: 488, dtype: float64
+0     -122.427306
+1     -122.415945
+2     -122.492521
+3     -122.416105
+4     -122.394808
+          ...    
+483      0.000000
+484   -122.402575
+485   -122.409658
+486   -122.385295
+487   -122.392580
+Name: sort_lon, Length: 488, dtype: float64
+Subset of csv with only few columns
+    locationid        lat         lon
+0      1571753  37.762019 -122.427306
+1      1569152  37.805885 -122.415945
+2      1569145  37.721890 -122.492521
+3      1590834  37.767852 -122.416105
+4      1591823  37.777755 -122.394808
+..         ...        ...         ...
+483    1332946   0.000000    0.000000
+484     934553  37.788779 -122.402575
+485    1332939  37.773694 -122.409658
+486    1337434  37.726710 -122.385295
+487    1337447  37.788139 -122.392580
+
+[488 rows x 3 columns]
+Enter value for Latitude: 37.762019
+Enter value for Longitude: -122.427306
+37.762019
+-122.427306
+Traceback (most recent call last):
+  File "/Users/yogitamalviya/miniconda3/yy1.py", line 55, in <module>
+    df1['dist']=list(map(lambda k: getDist(df1.loc[k]['lat'],df1.loc[k]['lon'],newlat,newlon), df1.index))
+  File "/Users/yogitamalviya/miniconda3/yy1.py", line 55, in <lambda>
+    df1['dist']=list(map(lambda k: getDist(df1.loc[k]['lat'],df1.loc[k]['lon'],newlat,newlon), df1.index))
+  File "/Users/yogitamalviya/miniconda3/yy1.py", line 44, in getDist
+    lat2 = radians(lat2)
+TypeError: must be real number, not str
+(dev_env) Nagina-Malviya:miniconda3 yogitamalviya$ vi yy1.py
+(dev_env) Nagina-Malviya:miniconda3 yogitamalviya$ mv yy1.py Find_Food_Truck_Facility_SF.py
+(dev_env) Nagina-Malviya:miniconda3 yogitamalviya$ 
+
+
+
