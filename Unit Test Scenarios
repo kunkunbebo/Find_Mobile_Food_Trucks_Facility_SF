@@ -1,0 +1,34 @@
+Script 1: Find_Mobile_Food_Trucks.py
+Test case 1: Test if script is able to read csv using pandas read_csv method
+Expected outcome: pandas dataframe should print csv content and it should match number of rows and columns in csv
+
+Test case 2: Test if script can filter values of two columns by hard coding those values. Use 'Applicant' = 'Cochinita' and 'locationid' = 1591822
+Expected outcome: Result should be 1 row and 13 columns from the dataframe as these hardcoded values are from same Mobile Food Facility Permit csv that was read into dataframe. Empty array will be retuned if values are outside csv file
+
+
+Test case 3: Request user to enter 'Applicant' and 'locationid', search pandas dataframe using these two values
+Expected outcome: Result should be 1 row and 13 columns from the dataframe as these hardcoded values are from same Mobile Food Facility Permit csv that was read into dataframe. Empty array will be retuned if values are outside csv file
+
+Test case 4: if test case 1 and 2 and 3 are successful then ask user to provide latitude and longitude as inputs. Use these inputs to search for records in dataframe. 
+Expected outcome: Result should be 1 row and 13 columns from the dataframe as these hardcoded values are from same Mobile Food Facility Permit csv that was read into dataframe. Empty array will be retuned if values are outside csv file
+
+
+Script2: Find_Food_Truck_Facility_SF.py
+Test case 1: Test if script is able to read csv using pandas read_csv method
+Expected outcome: pandas dataframe should print csv content and it should match number of rows and columns in
+
+Test case 2: Test if two additional columns could be added to pandas dataframe keeping the type of column as float64, this is original data type of latitude and longitude column.
+Expected outcome: 15 columns should be displayed when using print(new dataframe)
+
+Test case 3: Create new dataframe with few columns from the dataframe while using the new latitude and longitude columns. This is because we have to use mathematical calculations, so idea is to work with smaller set of data first. If script passes all the test cases then all the columns (13) will be added to the user displayed output by modifying the dataframe
+Expected outcome: New Dataframe displayed with 3 columns - locationid, lat and lon
+
+Test case 4: Hard code latitude and longitude into newlat and newlon variables and then use getdist function to calculate distance of newlat and newlon from lat and lon in the dataframe (second dataframe with fewer columns). And then display all the food trucks within 60 km of the newlat and newlon
+Expected outcome: Display all the nearest food trucks based on newlat and newlon
+
+Test case 5: Request user to provide latitude and longitude, collect it into newlat and newlon variables and then use getdist function to calculate distance of newlat and newlon from lat and lon in the dataframe (second dataframe with fewer columns). And then display all the food trucks within 60 km of the newlat and newlon
+Expected outcome: Display all the nearest food trucks based on newlat and newlon
+
+** Details of the outcome of these test cases from my dev environment is avaialable in File "About Python Scripts Coded" https://github.com/kunkunbebo/Find_Mobile_Food_Trucks_Facility_SF/blob/main/About%20Python%20Scripts%20Coded
+
+
