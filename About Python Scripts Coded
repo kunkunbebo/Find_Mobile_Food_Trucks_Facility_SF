@@ -1,0 +1,62 @@
+# Program Logic and my thought process
+
+I have tried multiple ways to solve this problem,
+1. Using Python pandas to create and read dataframe for extracting rows matching user provided latitude and longitude values. 
+Two scripts are commited to github that I created, will explain about each script below.
+
+Script 1: Find_Mobile_Food_Trucks1.py
+This is a very simple script using python and python pandas to search pandas dataframe for two values and return the rows matching the two values. The script runs fine with string and integer values as shown below. But it returns empty dataframe when latitude and longitude are used as filters due to data type issue
+(dev_env) Nagina-Malviya:miniconda3 yogitamalviya$ vi Find_Mobile_Food_Trucks.py
+#importing pandas
+import pandas as pd
+#Getting Latitude and Longitude as user input
+#lat=input('Enter Latitude:')
+#long=input('Enter Longitude:')
+#Getting app and locid as user input
+app = input('Enter Applicant: ')
+locid = input('Enter location id: ')
+df= pd.read_csv('Mobile_Food_facility_Permit.csv')
+#df = df.loc[df.Latitude == lat]
+#Below command works fine and returns rows matching the criteria
+#df1=df.loc[(df['Applicant'] == 'Cochinita') & (df['locationid'] == 1591822)]
+#Below command gives an error as I still need to resolve data type issue, lat and lon is float64 which is causing a streing search on these instead of numeric value match
+#df1=df.loc[(df['Applicant'] == app) & (df['locationid'] == locid)]
+print(df1)
+
+(dev_env) Nagina-Malviya:miniconda3 yogitamalviya$ python Find_Mobile_Food_Trucks.py
+Enter Applicant: Cochinita
+Enter location id: 1591822
+    locationid  Applicant FacilityType  ...  Supervisor Districts Zip Codes Neighborhoods (old)
+35     1591822  Cochinita        Truck  ...                   8.0   28859.0                19.0
+
+[1 rows x 29 columns]
+(dev_env) Nagina-Malviya:miniconda3 yogitamalviya$ 
+
+
+#importing pandas
+import pandas as pd
+#Getting Latitude and Longitude as user input
+lat=input('Enter Latitude:')
+long=input('Enter Longitude:')
+#app = input('Enter Applicant: ')
+#locid = input('Enter location id: ')
+df= pd.read_csv('Mobile_Food_facility_Permit.csv')
+#df = df.loc[df.Latitude == lat]
+#Below command works fine and returns rows matching the criteria
+#df1=df.loc[(df['Applicant'] == 'Cochinita') & (df['locationid'] == 1591822)]
+#Below command gives an error as I still need to resolve data type issue, lat and lon is float64 which is causing a streing search on these instead of numeric value match
+#df1=df.loc[(df['Applicant'] == app) & (df['locationid'] == locid)]
+df1=df.loc[(df['Latitude'] == lat) & (df['Longitude'] == long)]
+print(df1)
+
+(dev_env) Nagina-Malviya:miniconda3 yogitamalviya$ python Find_Mobile_Food_Trucks.py
+Enter Latitude:37.762019            
+Enter Longitude:-122.427306
+Empty DataFrame
+Columns: [locationid, Applicant, FacilityType, cnn, LocationDescription, Address, blocklot, block, lot, permit, Status, FoodItems, X, Y, Latitude, Longitude, Schedule, dayshours, NOISent, Approved, Received, PriorPermit, ExpirationDate, Location, Fire Prevention Districts, Police Districts, Supervisor Districts, Zip Codes, Neighborhoods (old)]
+Index: []
+(dev_env) Nagina-Malviya:miniconda3 yogitamalviya$ 
+
+
+
+Script 2: 
