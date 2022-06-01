@@ -1,0 +1,15 @@
+Script 1: Find_Mobile_Food_Trucks.py
+Test case 1: Test if script is able to read csv using pandas read_csv method
+Expected outcome: pandas dataframe should print csv content and it should match number of rows and columns in csv
+
+Test case 2: Test if script can filter values of two columns by hard coding those values. Use 'Applicant' = 'Cochinita' and 'locationid' = 1591822
+Expected outcome: Result should be 1 row and 13 columns from the dataframe as these hardcoded values are from same Mobile Food Facility Permit csv that was read into dataframe. Empty array will be retuned if values are outside csv file
+
+
+Test case 3: Request user to enter 'Applicant' and 'locationid', search pandas dataframe using these two values
+Expected outcome: Result should be 1 row and 13 columns from the dataframe as these hardcoded values are from same Mobile Food Facility Permit csv that was read into dataframe. Empty array will be retuned if values are outside csv file
+
+Test case 4: if test case 1 and 2 and 3 are successful then ask user to provide latitude and longitude as inputs. Use these inputs to search for records in dataframe. Result should be 1 row and 13 columns from the dataframe as these hardcoded values are from same Mobile Food Facility Permit csv that was read into dataframe. Empty array will be retuned if values are outside csv file
+
+
+Script2: 
