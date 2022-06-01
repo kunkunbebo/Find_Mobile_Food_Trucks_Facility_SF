@@ -1,0 +1,161 @@
+# This file details the steps to set-up the environment for creating and executing python script that displays the list of Food Trucks for user provided latitude and longitude
+# For the purposes of this excercise we will use Miniconda distribution of Python. Before explaining the steps to set-up Miniconda environment, we will just know a little bit about anaconda and miniconda distributions of python.
+
+Anaconda 
+It has more than 1500 Python/R data science packages. Anaconda simplifies package management and deployment. 
+It has tools to easily collect data from sources using machine learning and AI. 
+It creates an environment that is easily manageable for deploying any project.
+
+Miniconda 
+Miniconda is a free minimal installer for conda. It is a small, bootstrap version of Anaconda that includes only conda, Python, the packages they depend on, and a small number of other useful packages, including pip, zlib and a few others. 
+Use the conda install command to install 720+ additional conda packages from the Anaconda repository. We will be using conda command, 
+ a. create dev and prod environments 
+ b. download pandas and numpy packages
+
+Note: For the coding challenge we will use Miniconda as it has required packages required to program the solution for finding atleast 5 Food Trucks for a given latitude and longitude
+
+Steps for Environment set up
+1. Check System Requirements 
+  32- or 64-bit computer.
+  For Miniconda---400 MB disk space.
+  For Anaconda---Minimum 3 GB disk space to download and install.
+  Windows, macOS, or Linux.
+  For Windows: Windows 8.1 or newer for Python 3.9, or Windows Vista or newer for Python 3.8.
+  
+ 2. Download Miniconda from here based on the OS and other system specifications,
+   https://docs.conda.io/en/latest/miniconda
+   
+ ** Note
+
+You do not need administrative or root permissions to install Anaconda if you select a user-writable install location.
+
+3. I have mac so I am using the mac installer for the excercise
+
+4. Once the download is complete, you will see file with name in 'Downloads' directory -
+    bash Miniconda3-latest-MacOSX-x86_64.sh
+5. Open Terminal window and execute the shell script >> bash Miniconda3-latest-MacOSX-x86_64.sh
+6. Follow the prompts on the installer screens.
+   If you are unsure about any setting, accept the defaults. You can change them later. To make the changes take effect, close and then re-open your terminal window.
+ 7. Test your installation. In your terminal window or Anaconda Prompt, run the command conda list. A list of installed packages appears if it has been  installed correctly.
+  
+  Here is the output from my installation,
+  (base) Nagina-Malviya:miniconda3 yogitamalviya$ conda list
+# packages in environment at /Users/yogitamalviya/miniconda3:
+#
+# Name                    Version                   Build  Channel
+brotlipy                  0.7.0           py39h9ed2024_1003  
+ca-certificates           2022.3.29            hecd8cb5_1  
+certifi                   2021.10.8        py39hecd8cb5_2  
+cffi                      1.15.0           py39hc55c11b_1  
+charset-normalizer        2.0.4              pyhd3eb1b0_0  
+colorama                  0.4.4              pyhd3eb1b0_0  
+conda                     4.12.0           py39hecd8cb5_0  
+conda-content-trust       0.1.1              pyhd3eb1b0_0  
+conda-package-handling    1.8.1            py39hca72f7f_0  
+cryptography              36.0.0           py39hf6deb26_0  
+idna                      3.3                pyhd3eb1b0_0  
+libcxx                    12.0.0               h2f01273_0  
+libffi                    3.3                  hb1e8313_2  
+ncurses                   6.3                  hca72f7f_2  
+openssl                   1.1.1n               hca72f7f_0  
+pip                       21.2.4           py39hecd8cb5_0  
+pycosat                   0.6.3            py39h9ed2024_0  
+pycparser                 2.21               pyhd3eb1b0_0  
+pyopenssl                 22.0.0             pyhd3eb1b0_0  
+pysocks                   1.7.1            py39hecd8cb5_0  
+python                    3.9.12               hdfd78df_0  
+python.app                3                py39hca72f7f_0  
+readline                  8.1.2                hca72f7f_1  
+requests                  2.27.1             pyhd3eb1b0_0  
+ruamel_yaml               0.15.100         py39h9ed2024_0  
+setuptools                61.2.0           py39hecd8cb5_0  
+six                       1.16.0             pyhd3eb1b0_1  
+sqlite                    3.38.2               h707629a_0  
+tk                        8.6.11               h7bc2e8c_0  
+tqdm                      4.63.0             pyhd3eb1b0_0  
+tzdata                    2022a                hda174b7_0  
+urllib3                   1.26.8             pyhd3eb1b0_0  
+wheel                     0.37.1             pyhd3eb1b0_0  
+xz                        5.2.5                h1de35cc_0  
+yaml                      0.2.5                haf1e3a3_0  
+zlib                      1.2.12               h4dc903c_1  
+(base) Nagina-Malviya:miniconda3 yogitamalviya$ 
+
+
+Conda environments
+A conda environment is a directory that contains a specific collection of conda packages that you have installed. For example, you may have one environment with NumPy 1.7 and its dependencies, and another environment with NumPy 1.6 for legacy testing. If you change one environment, your other environments are not affected. You can easily activate or deactivate environments, which is how you switch between them. You can also share your environment with someone by giving them a copy of your environment.yaml file. 
+
+Conda directory structure
+ROOT_DIR
+The directory that Miniconda was installed into.
+My ROOT_DIR is, (check putput of pwd)
+(base) Nagina-Malviya:miniconda3 yogitamalviya$ pwd
+/Users/yogitamalviya/miniconda3
+
+PKGS_DIR - This directory contains decompressed packages, ready to be linked in conda environments. Each package resides in a subdirectory corresponding to its canonical name.
+My PKGS_DIR is,
+/Users/yogitamalviya/miniconda3
+(base) Nagina-Malviya:miniconda3 yogitamalviya$ ls -ltrh
+total 608
+-rw-r--r--    1 yogitamalviya  staff    10K 22 Apr 00:00 LICENSE.txt
+drwxr-xr-x    8 yogitamalviya  staff   256B 27 May 14:14 share
+drwxr-xr-x    9 yogitamalviya  staff   288B 27 May 14:14 ssl
+drwxr-xr-x  114 yogitamalviya  staff   3.6K 27 May 14:14 include
+drwxr-xr-x   93 yogitamalviya  staff   2.9K 27 May 14:14 lib
+drwxr-xr-x    4 yogitamalviya  staff   128B 27 May 14:14 etc
+drwxr-xr-x    3 yogitamalviya  staff    96B 27 May 14:14 shell
+drwxr-xr-x    3 yogitamalviya  staff    96B 27 May 14:14 condabin
+drwxr-xr-x   71 yogitamalviya  staff   2.2K 27 May 14:14 bin
+drwxr-xr-x    3 yogitamalviya  staff    96B 27 May 14:14 python.app
+drwxr-xr-x   39 yogitamalviya  staff   1.2K 27 May 14:14 conda-meta
+-rwxrwxrwx@   1 yogitamalviya  staff   277K 27 May 14:29 Mobile_Food_Facility_Permit.csv
+drwxr-xr-x    5 yogitamalviya  staff   160B 30 May 23:45 envs
+drwxr-xr-x  334 yogitamalviya  staff    10K 30 May 23:51 pkgs
+-rwxr-xr-x    1 yogitamalviya  staff   375B 31 May 13:43 Find_Mobile_Food_Trucks1.py
+-rw-r--r--    1 yogitamalviya  staff   187B 31 May 13:47 Find_Mobile_Food_Trucks3.py
+-rwxrwxrwx    1 yogitamalviya  staff   536B  1 Jun 00:04 Find_Mobile_Food_Trucks.py
+(base) Nagina-Malviya:miniconda3 yogitamalviya$ 
+
+
+/envs
+The system location for additional conda environments to be created.
+
+The following subdirectories comprise the default Anaconda environment:
+
+/bin
+/include
+/lib
+/share
+
+My environments directory is, 
+drwxr-xr-x    5 yogitamalviya  staff   160B 30 May 23:45 envs
+
+Location of envs directory is,
+/Users/yogitamalviya/miniconda3
+
+The next step is to create a new conda environment. A conda environment is like a virtualenv that allows you to specify a specific version of Python and set of libraries. Run the following commands from a terminal window:
+
+Development Environment
+conda create -n dev_env python
+source activate dev_env
+source activate dev_env
+
+Here are my environments for this project,
+(base) Nagina-Malviya:miniconda3 yogitamalviya$ cd envs
+(base) Nagina-Malviya:envs yogitamalviya$ ls -ltrh
+total 0
+drwxr-xr-x  10 yogitamalviya  staff   320B 27 May 14:23 dev_env
+drwxr-xr-x  18 yogitamalviya  staff   576B 30 May 23:51 geovis
+(base) Nagina-Malviya:envs yogitamalviya$ pwd
+/Users/yogitamalviya/miniconda3/envs
+(base) Nagina-Malviya:envs yogitamalviya$ date
+Wed  1 Jun 2022 11:19:56 AEST
+(base) Nagina-Malviya:envs yogitamalviya$ 
+
+** Please note that geovis is another environment created to use geo mapping packages for plotting SF csv data on Google Map using Google Map API. I am not using it for this assignment as it is requires more time to configure and program Google Map API for consuming and plotting the SF csv.                         
+
+
+
+
+    
+
